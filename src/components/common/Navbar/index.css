@@ -1,0 +1,17 @@
+.tabbar {
+  display: flex;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  background-color: rgb(28, 179, 195);
+  color: rgb(235, 252, 254);
+}
+.left {
+  flex: 10%;
+}
+.middle {
+  flex: 80%;
+}
+.right {
+  flex: 10%;
+}
