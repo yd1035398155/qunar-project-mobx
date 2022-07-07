@@ -10,6 +10,11 @@ export default class databar extends React.Component {
         <Dataitem />
         <Dataitem />
         <Dataitem />
+        <div className="more-data">
+          <div className="geli"></div>
+          <i className="iconfont icon-riqi"></i>
+          <p>更多日期</p>
+        </div>
       </div>
     )
   }

@@ -7,6 +7,7 @@
   text-align: center;
   background-color: rgb(28, 179, 195);
   color: rgb(235, 252, 254);
+  z-index: 100;
 }
 .left {
   flex: 10%;
@@ -18,6 +19,7 @@
 }
 .right {
   flex: 10%;
+  color: red;
 }
 .right img {
   flex: 1;
