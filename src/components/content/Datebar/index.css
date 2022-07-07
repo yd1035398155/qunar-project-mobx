@@ -1,0 +1,5 @@
+.data-wrapper {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(28, 179, 195);
+}

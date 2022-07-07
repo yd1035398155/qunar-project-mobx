@@ -1,0 +1,9 @@
+.data-item {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+  color: white;
+  font-size: 12px;
+  padding: 5px 0;
+}
