@@ -13,11 +13,7 @@ export default class Flightlist extends React.Component {
                   <p className="from-place">江北T3</p>
                 </div>
                 <div className="time-info">
-                  <p className="howlong"></p>
-                  <div className="plane-info">
-                    <div className="arrow-right"></div>
-                    <span className=""></span>
-                  </div>
+                  <div className="arrow-right"></div>
                 </div>
                 <div className="to-info">
                   <p className="to-time time-font">23:00</p>
@@ -25,7 +21,7 @@ export default class Flightlist extends React.Component {
                 </div>
               </div>
               <div className="company-info">
-                <span></span>
+                <span>东航MU6684 空客320(中)</span>
               </div>
             </div>
             <div className="price">
