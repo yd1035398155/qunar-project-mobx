@@ -1,13 +1,13 @@
 import React from "react"
 import "./index.css"
 import sousuo from "../../../assets/img/sousuo.svg"
-export default class Navbar extends React.Component {
+export default class Topbar extends React.Component {
   quit = () => {
     alert("退出")
   }
   render() {
     return (
-      <div className="tabbar">
+      <div className="topbar">
         <div className="left" onClick={this.quit}>
           &lt;
         </div>
