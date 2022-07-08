@@ -4,20 +4,18 @@ import "./index.css"
 export default class Bottombar extends React.Component {
   constructor(props) {
     super(props)
-    this.myref = null
+    this.mybody = React.createRef()
+    this.mybody2 = React.createRef()
+    this.add = this.add.bind(this)
   }
   add() {
-    console.log(this.myref)
+    this.mybody.current.style.bottom = -44 + "px"
   }
+
   render() {
     return (
-      <div className="bottombar" onClick={this.add}>
-        <div
-          className="bottom-container"
-          ref={(arg) => {
-            this.myref = arg
-          }}
-        >
+      <div className="bottombar" ref={this.mybody} onClick={this.add}>
+        <div className="bottom-container">
           <div>
             <i className="iconfont icon-shaixuan"></i>
             <p>筛选</p>
