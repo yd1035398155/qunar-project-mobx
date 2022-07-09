@@ -1,20 +1,26 @@
 import React from "react"
 import "./index.css"
+import { throttle } from "../../../assets/js/utils"
 
 export default class Bottombar extends React.Component {
   constructor(props) {
     super(props)
-    this.mybody = React.createRef()
-    this.mybody2 = React.createRef()
-    this.add = this.add.bind(this)
+    this.btmbar = React.createRef()
+    this.Handlescroll = this.Handlescroll.bind(this)
   }
-  add() {
-    this.mybody.current.style.bottom = -44 + "px"
+  Handlescroll() {
+    if (document.documentElement.scrollTop > 0) {
+      this.btmbar.current.style.bottom = -44 + "px"
+    } else {
+      this.btmbar.current.style.bottom = 0
+    }
   }
-
+  componentDidMount() {
+    window.addEventListener("scroll", throttle(this.Handlescroll))
+  }
   render() {
     return (
-      <div className="bottombar" ref={this.mybody} onClick={this.add}>
+      <div className="bottombar" ref={this.btmbar}>
         <div className="bottom-container">
           <div>
             <i className="iconfont icon-shaixuan"></i>

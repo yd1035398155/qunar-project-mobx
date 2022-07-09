@@ -6,8 +6,8 @@
   top: 44px;
   justify-content: space-around;
   background-color: rgb(28, 179, 195);
-  z-index: 100;
-  transition: bottom 1s;
+  z-index: 99;
+  transition: top 1s;
 }
 
 .more-data {
