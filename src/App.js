@@ -11,9 +11,8 @@ class App extends React.Component {
     this.state = { from: "重庆", to: "北京" }
   }
   componentDidMount() {
-    console.log("ok")
     let xhr = new XMLHttpRequest()
-    xhr.open("get", "http://192.168.2.171:8000/home")
+    xhr.open("get", "http://192.168.2.171:8000/")
     xhr.send()
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
