@@ -2,6 +2,7 @@ import React from "react"
 import Dataitem from "../Dataitem"
 import "./index.css"
 import { throttle } from "../../../assets/js/utils"
+import { Routes, Route, NavLink } from "react-router-dom"
 export default class databar extends React.Component {
   constructor(props) {
     super(props)
@@ -32,6 +33,13 @@ export default class databar extends React.Component {
           <p>更多日期</p>
         </div>
       </div>
+      // <Routes className="data-wrapper" ref={this.databar}>
+      //   <Route path="/" element={<Dataitem />}></Route>
+      //   <Link to="/">a</Link>
+      //   <Route path="/one" element={<Dataitem />}></Route>
+      //   <Link to="/one">b</Link>
+
+      // </Routes>
     )
   }
 }
