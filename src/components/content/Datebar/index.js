@@ -2,7 +2,7 @@ import React from "react"
 import Dataitem from "../Dataitem"
 import "./index.css"
 import { throttle } from "../../../assets/js/utils"
-import { Routes, Route, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 export default class databar extends React.Component {
   constructor(props) {
     super(props)
@@ -22,11 +22,26 @@ export default class databar extends React.Component {
   render() {
     return (
       <div className="data-wrapper" ref={this.databar}>
+        {/* <Dataitem />
         <Dataitem />
         <Dataitem />
         <Dataitem />
-        <Dataitem />
-        <Dataitem />
+        <Dataitem /> */}
+        <NavLink to="/A">
+          <Dataitem />
+        </NavLink>
+        <NavLink to="/B">
+          <Dataitem />
+        </NavLink>
+        <NavLink to="/C">
+          <Dataitem />
+        </NavLink>
+        <NavLink to="/D">
+          <Dataitem />
+        </NavLink>
+        <NavLink to="/F">
+          <Dataitem />
+        </NavLink>
         <div className="more-data">
           <div className="geli"></div>
           <i className="iconfont icon-riqi"></i>

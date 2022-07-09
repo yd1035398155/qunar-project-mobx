@@ -9,19 +9,28 @@
   z-index: 99;
   transition: top 1s;
 }
-
+.data-wrapper a {
+  border-radius: 5px;
+  color: white;
+  height: 90%;
+}
+.data-wrapper .active {
+  background-color: white;
+  color: rgb(28, 179, 195);
+  text-decoration: none;
+}
 .more-data {
   position: relative;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 5px;
 }
 .more-data::before {
   content: "";
   position: absolute;
-  height: 44px;
+  height: 50px;
   width: 1px;
   left: -8px;
-  top: 9px;
+  top: 2px;
   background-color: white;
 }
 .more-data p {
