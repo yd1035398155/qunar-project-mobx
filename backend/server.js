@@ -1,9 +1,28 @@
 const express = require("express")
 const app = express()
-app.get("/", (request, response) => {
+app.get("/date", (request, response) => {
   response.setHeader("Access-Control-Allow-Origin", "*")
-  response.send(JSON.stringify(flight_info1))
-  console.log(fligth_info2, fligth_info3, fligth_info4, flight_info5)
+  let flight_info = {}
+  switch (request.query.date) {
+    case "A":
+      flight_info = flight_info1
+      break
+    case "B":
+      flight_info = flight_info2
+      break
+    case "C":
+      flight_info = flight_info3
+      break
+    case "D":
+      flight_info = flight_info4
+      break
+    case "E":
+      flight_info = flight_info5
+      break
+    default:
+      break
+  }
+  response.send(JSON.stringify(flight_info))
 })
 app.listen(8000, () => {
   console.log("服务启动，8000端口监听中")
@@ -18,8 +37,8 @@ let flight_info1 = {
       place: "江北T2",
     },
     to_info: {
-      hour: 23,
-      minite: 0,
+      hour: 11,
+      minite: 25,
       place: "首都T2",
     },
     company_info: "川航3U8820 空客320(中)",
@@ -182,7 +201,7 @@ let flight_info1 = {
     },
   },
 }
-let fligth_info2 = {
+let flight_info2 = {
   data1: {
     from_info: {
       hour: 20,
@@ -320,7 +339,7 @@ let fligth_info2 = {
     },
   },
 }
-let fligth_info3 = {
+let flight_info3 = {
   data1: {
     from_info: {
       hour: 7,
@@ -492,7 +511,7 @@ let fligth_info3 = {
     },
   },
 }
-let fligth_info4 = {
+let flight_info4 = {
   data1: {
     from_info: {
       hour: 20,

@@ -7,6 +7,9 @@
   border-top: 1px solid rgb(245, 245, 245);
   transition: bottom 1s;
 }
+.active {
+  color: #1ba9ba !important;
+}
 .bottom-container {
   display: flex;
   justify-content: space-around;
@@ -16,6 +19,7 @@
 .bottom-container div {
   display: flex;
   flex-direction: column;
+  width: 50px;
   align-items: center;
   justify-content: space-around;
   font-size: 12px;

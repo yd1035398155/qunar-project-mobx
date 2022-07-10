@@ -1,4 +1,4 @@
-.data-wrapper {
+.date-wrapper {
   position: fixed;
   display: flex;
   width: 100%;
@@ -9,22 +9,22 @@
   z-index: 99;
   transition: top 1s;
 }
-.data-wrapper a {
+.date-wrapper a {
   border-radius: 5px;
   color: white;
   height: 90%;
 }
-.data-wrapper .active {
+.date-wrapper .active {
   background-color: white;
   color: rgb(28, 179, 195);
   text-decoration: none;
 }
-.more-data {
+.more-date {
   position: relative;
   text-align: center;
   padding-top: 5px;
 }
-.more-data::before {
+.more-date::before {
   content: "";
   position: absolute;
   height: 50px;
@@ -33,7 +33,7 @@
   top: 2px;
   background-color: white;
 }
-.more-data p {
+.more-date p {
   font-size: 12px;
   color: rgb(235, 252, 254);
 }

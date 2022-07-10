@@ -1,6 +1,5 @@
 import React from "react"
 import "./index.css"
-// import sousuo from "../../../assets/img/sousuo.svg"
 export default class Topbar extends React.Component {
   quit = () => {
     alert("退出")
