@@ -1,40 +1,38 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Dateitem from "../Dateitem"
 import "./index.css"
 import { throttle } from "../../../assets/js/utils"
 import { Link } from "react-router-dom"
-import { connect } from "react-redux"
-import { createRecommandSortAction, createTimeSortAction, createPriceSortAction, createUpdateAction } from "../../../redux/action"
-import { TIME, PRICE, RECOMMAND, UPDATE } from "../../../redux/constant"
-class datebar extends React.Component {
-  constructor(props) {
-    super(props)
-    this.datebar = React.createRef()
-    this.state = {
-      now_date: "A",
-      date_bar: {
-        A: { date: "7-11", week: "今天", price: 485 },
-        B: { date: "7-12", week: "周二", price: 435 },
-        C: { date: "7-13", week: "周三", price: 485 },
-        D: { date: "7-14", week: "周四", price: 435 },
-        E: { date: "7-15", week: "周五", price: 485 },
-      },
-    }
-  }
-  Handlescroll = () => {
+import { useStore } from "../../../store"
+import { observer } from "mobx-react-lite"
+
+function Datebar() {
+  const { bottombarStore, flightListStore } = useStore()
+  // 旧状态的order
+  // let { T_state, P_state } = bottombarStore
+  const [now_date, setNowData] = useState("A")
+  const [date_bar] = useState({
+    A: { date: "7-11", week: "今天", price: 485 },
+    B: { date: "7-12", week: "周二", price: 435 },
+    C: { date: "7-13", week: "周三", price: 485 },
+    D: { date: "7-14", week: "周四", price: 435 },
+    E: { date: "7-15", week: "周五", price: 485 },
+  })
+  const datebarRef = React.useRef()
+  function Handlescroll() {
     if (document.documentElement.scrollTop > 0) {
-      this.datebar.current.style.top = -14 + "px"
+      datebarRef.current.style.top = -14 + "px"
     } else {
-      this.datebar.current.style.top = 44 + "px"
+      datebarRef.current.style.top = 44 + "px"
     }
   }
-  changeDate = (date) => {
-    const { T_state, P_state, type } = this.props.data
-    const { now_date } = this.state
+  function changeDate(date) {
+    bottombarStore.setOrder("update")
+    // date新日期 now_date旧日期
     if (date === now_date) {
       return
     } else {
-      this.setState({ now_date: date })
+      setNowData(date)
       // 发送网络请求
       let request_list = []
       let xhr = new XMLHttpRequest()
@@ -47,77 +45,76 @@ class datebar extends React.Component {
           for (let i in data) {
             request_list.push(data[i])
           }
+          console.log(1)
           //更新redux中的状态
-          switch (type) {
-            case UPDATE:
-              this.props.update({ state: 0, data: request_list })
+          switch (bottombarStore.order) {
+            case "update":
+              console.log(2)
+              flightListStore.updateFlightList(request_list)
+              bottombarStore.setT(0)
+              bottombarStore.setP(0)
               break
-            case RECOMMAND:
-              this.props.recommandSort({ state: 0, data: request_list })
+            case "recommand":
+              flightListStore.recommandSort()
+              bottombarStore.setT(0)
+              bottombarStore.setP(0)
               break
-            case TIME:
+            case "time":
               // 点的时间排序,上一次不是时间排序
-              if (T_state === 1) {
-                this.props.timeSort({ state: 1, data: request_list })
+              if (bottombarStore.T_state === 1) {
+                // this.props.timeSort({ state: 1, data: request_list })
+                flightListStore.updateFlightList(flightListStore.timeSort(bottombarStore.T_state))
+                bottombarStore.setT(1)
+                bottombarStore.setP(0)
               } else {
                 // 点的时间排序,上一次是时间排序
-                this.props.timeSort({ state: 0, data: request_list })
+                // this.props.timeSort({ state: 0, data: request_list })
+                flightListStore.updateFlightList(flightListStore.timeSort(bottombarStore.T_state))
+                bottombarStore.setT(0)
+                bottombarStore.setP(0)
               }
               break
-            case PRICE:
-              if (P_state === 1) {
-                this.props.priceSort({ state: 1, data: request_list })
+            case "price":
+              if (bottombarStore.P_state === 1) {
+                // this.props.priceSort({ state: 1, data: request_list })
+                flightListStore.updateFlightList(flightListStore.priceSort(bottombarStore.P_state))
+                bottombarStore.setT(0)
+                bottombarStore.setP(1)
               } else {
                 // 点的时间排序,上一次是时间排序
-                this.props.priceSort({ state: 0, data: request_list })
+                // this.props.priceSort({ state: 0, data: request_list })
+                flightListStore.updateFlightList(flightListStore.priceSort(bottombarStore.P_state))
+                bottombarStore.setT(0)
+                bottombarStore.setP(0)
               }
               break
             default:
               break
           }
-          // console.log(request_list)
-          // if (type === UPDATE || type === RECOMMAND) {
-
-          // }
         }
       }
     }
   }
-  componentDidMount() {
-    window.addEventListener("scroll", throttle(this.Handlescroll))
-  }
-  render() {
-    return (
-      <div className="date-wrapper" ref={this.datebar}>
-        {Object.keys(this.state.date_bar).map((key, index) => {
-          return (
-            <Link
-              to={key}
-              key={index}
-              onClick={() => this.changeDate(key)}
-              className={this.state.now_date === key ? "active" : ""}
-            >
-              <Dateitem date_info={this.state.date_bar[key]} />
-            </Link>
-          )
-        })}
-        <div className="more-date">
-          <div className="geli"></div>
-          <i className="iconfont icon-riqi"></i>
-          <p>更多日期</p>
-        </div>
+
+  useEffect(() => {
+    window.addEventListener("scroll", throttle(Handlescroll))
+  }, [])
+
+  return (
+    <div className="date-wrapper" ref={datebarRef}>
+      {Object.keys(date_bar).map((key, index) => {
+        return (
+          <Link to={key} key={index} onClick={() => changeDate(key)} className={now_date === key ? "active" : ""}>
+            <Dateitem date_info={date_bar[key]} />
+          </Link>
+        )
+      })}
+      <div className="more-date">
+        <div className="geli"></div>
+        <i className="iconfont icon-riqi"></i>
+        <p>更多日期</p>
       </div>
-    )
-  }
+    </div>
+  )
 }
-export default connect(
-  (state) => ({
-    data: state,
-  }),
-  {
-    recommandSort: createRecommandSortAction,
-    timeSort: createTimeSortAction,
-    priceSort: createPriceSortAction,
-    update: createUpdateAction,
-  }
-)(datebar)
+export default observer(Datebar)

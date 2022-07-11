@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { observer } from "mobx-react-lite"
 import "./index.css"
 import Flightlistrow from "../Flightlistrow"
-import { connect } from "react-redux"
-import { createUpdateAction } from "../../../redux/action"
-class Flightlist extends React.Component {
-  componentDidMount() {
+import { useStore } from "../../../store"
+
+function Flightlist() {
+  const { flightListStore } = useStore()
+  useEffect(() => {
     let request_list = []
     let A = "A"
     let xhr = new XMLHttpRequest()
@@ -18,44 +20,27 @@ class Flightlist extends React.Component {
           request_list.push(data[i])
         }
         //更新redux中的状态
-        this.props.updata({ state: 0, data: request_list })
+        flightListStore.updateFlightList(request_list)
       }
     }
-  }
-  render() {
-    return (
-      <div className="flight-content">
-        <ul className="flight-list">
-          {/* {this.props.data.r_data.map((a, index) => {
-            return (
-              <Flightlistrow
-                key={index}
-                from_info={a.from_info}
-                to_info={a.to_info}
-                company_info={a.company_info}
-                price_info={a.price_info}
-              />
-            )
-          })} */}
+  }, [flightListStore])
 
-          {this.props.data === undefined ? (
-            <></>
-          ) : (
-            this.props.data.r_data.map((a, index) => {
-              return (
-                <Flightlistrow
-                  key={index}
-                  from_info={a.from_info}
-                  to_info={a.to_info}
-                  company_info={a.company_info}
-                  price_info={a.price_info}
-                />
-              )
-            })
-          )}
-        </ul>
-      </div>
-    )
-  }
+  return (
+    <div className="flight-content">
+      <ul className="flight-list">
+        {flightListStore.getDate.map((a, index) => {
+          return (
+            <Flightlistrow
+              key={index}
+              from_info={a.from_info}
+              to_info={a.to_info}
+              company_info={a.company_info}
+              price_info={a.price_info}
+            />
+          )
+        })}
+      </ul>
+    </div>
+  )
 }
-export default connect((state) => ({ data: state }), { updata: createUpdateAction })(Flightlist)
+export default observer(Flightlist)
