@@ -4,7 +4,7 @@ import { throttle } from "../../../assets/js/utils"
 import { useStore } from "../../../store"
 import { observer } from "mobx-react-lite"
 function Bottombar() {
-  const { bottombarStore } = useStore()
+  const { bottombarStore, flightListStore } = useStore()
   let { T_state, P_state } = bottombarStore
   const btmbar = React.useRef()
   const [itemname, setItem] = useState({
@@ -32,19 +32,20 @@ function Bottombar() {
       })
       // 修改当前排序状态
       bottombarStore.setOrder("recommand")
+      flightListStore.recommandSort()
       bottombarStore.setT(0)
       bottombarStore.setP(0)
     }
     // 时间排序
     else if (key === "time") {
-      bottombarStore.setOrder("recommand")
+      bottombarStore.setOrder("time")
       if (T_state === 0) {
         setItem({
           ...itemname,
           time: "从早到晚",
           price: "价格",
         })
-        bottombarStore.setOrder("time")
+        flightListStore.timeSort(0)
         bottombarStore.setT(1)
         bottombarStore.setP(0)
       } else {
@@ -53,19 +54,22 @@ function Bottombar() {
           time: "从晚到早",
           price: "价格",
         })
-        bottombarStore.setOrder("time")
+        flightListStore.timeSort(1)
         bottombarStore.setT(0)
         bottombarStore.setP(0)
       }
-    } else if (key === "price") {
+    }
+    //价格排序
+    else if (key === "price") {
       bottombarStore.setOrder("price")
-      // 当前状态为0,当前状态为 初始态 或者 高到低 则变为 从低到高排序
+      // 当前状态为 初始态 或者 高到低 则变为 从低到高排序
       if (P_state === 0) {
         setItem({
           ...itemname,
           time: "时间",
           price: "从低到高",
         })
+        flightListStore.priceSort(0)
         bottombarStore.setT(0)
         bottombarStore.setP(1)
       }
@@ -76,6 +80,7 @@ function Bottombar() {
           time: "时间",
           price: "从高到低",
         })
+        flightListStore.priceSort(1)
         bottombarStore.setT(0)
         bottombarStore.setP(0)
       }

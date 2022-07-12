@@ -10,7 +10,7 @@ function Flightlist() {
     let request_list = []
     let A = "A"
     let xhr = new XMLHttpRequest()
-    const baseURL = "http://192.168.2.171:8000/date?date=" + A
+    const baseURL = "http://localhost:8000/date?date=" + A
     xhr.open("get", baseURL)
     xhr.send()
     xhr.onload = () => {

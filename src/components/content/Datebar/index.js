@@ -27,7 +27,6 @@ function Datebar() {
     }
   }
   function changeDate(date) {
-    bottombarStore.setOrder("update")
     // date新日期 now_date旧日期
     if (date === now_date) {
       return
@@ -36,7 +35,7 @@ function Datebar() {
       // 发送网络请求
       let request_list = []
       let xhr = new XMLHttpRequest()
-      const baseURL = "http://192.168.2.171:8000/date?date=" + date
+      const baseURL = "http://localhost:8000/date?date=" + date
       xhr.open("get", baseURL)
       xhr.send()
       xhr.onload = () => {
@@ -45,47 +44,27 @@ function Datebar() {
           for (let i in data) {
             request_list.push(data[i])
           }
-          console.log(1)
-          //更新redux中的状态
+          flightListStore.updateFlightList(request_list)
+          //更新状态
           switch (bottombarStore.order) {
-            case "update":
-              console.log(2)
-              flightListStore.updateFlightList(request_list)
-              bottombarStore.setT(0)
-              bottombarStore.setP(0)
-              break
             case "recommand":
               flightListStore.recommandSort()
-              bottombarStore.setT(0)
-              bottombarStore.setP(0)
               break
             case "time":
-              // 点的时间排序,上一次不是时间排序
+              // 此时为从早到晚
               if (bottombarStore.T_state === 1) {
-                // this.props.timeSort({ state: 1, data: request_list })
-                flightListStore.updateFlightList(flightListStore.timeSort(bottombarStore.T_state))
-                bottombarStore.setT(1)
-                bottombarStore.setP(0)
+                // 0 正顺序
+                flightListStore.timeSort(0)
               } else {
-                // 点的时间排序,上一次是时间排序
-                // this.props.timeSort({ state: 0, data: request_list })
-                flightListStore.updateFlightList(flightListStore.timeSort(bottombarStore.T_state))
-                bottombarStore.setT(0)
-                bottombarStore.setP(0)
+                // 1  逆顺序
+                flightListStore.timeSort(1)
               }
               break
             case "price":
               if (bottombarStore.P_state === 1) {
-                // this.props.priceSort({ state: 1, data: request_list })
-                flightListStore.updateFlightList(flightListStore.priceSort(bottombarStore.P_state))
-                bottombarStore.setT(0)
-                bottombarStore.setP(1)
+                flightListStore.priceSort(0)
               } else {
-                // 点的时间排序,上一次是时间排序
-                // this.props.priceSort({ state: 0, data: request_list })
-                flightListStore.updateFlightList(flightListStore.priceSort(bottombarStore.P_state))
-                bottombarStore.setT(0)
-                bottombarStore.setP(0)
+                flightListStore.priceSort(1)
               }
               break
             default:

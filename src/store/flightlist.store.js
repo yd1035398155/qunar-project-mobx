@@ -13,7 +13,6 @@ class FlightListStore {
   }
   // 定义计算属性
   get getDate() {
-    console.log(JSON.parse(JSON.stringify(this.flight_list_data)))
     return JSON.parse(JSON.stringify(this.flight_list_data))
   }
   recommandSort = () => {
@@ -29,7 +28,7 @@ class FlightListStore {
     if (state === 1) {
       this.updateFlightList(list.reverse())
     } else {
-      this.updateFlightList(list.reverse)
+      this.updateFlightList(list)
     }
   }
   timeSort = (state) => {
@@ -48,7 +47,7 @@ class FlightListStore {
     if (state === 1) {
       this.updateFlightList(list.reverse())
     } else {
-      this.updateFlightList(list.reverse)
+      this.updateFlightList(list)
     }
   }
 }
